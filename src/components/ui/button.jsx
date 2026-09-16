@@ -29,7 +29,7 @@ const buttonVariants = cva(
   }
 )
 
-function Button({ className, variant, size, asChild = false, ...props }) {
+function Button({ className, variant, size, _asChild = false, ...props }) {
   return (
     <button
       data-slot="button"
@@ -39,4 +39,5 @@ function Button({ className, variant, size, asChild = false, ...props }) {
   )
 }
 
+// oxlint-disable-next-line react/only-export-components
 export { Button, buttonVariants }

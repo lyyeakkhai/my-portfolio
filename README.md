@@ -2,6 +2,8 @@
 
 A modern developer profile page built from scratch with **Vite**, **React 19**, and **Tailwind CSS v4** to practice core JSX rules, component hierarchy, and professional Git workflows.
 
+![Profile Page Preview](./screenshot.png)
+
 ---
 
 ## 🎯 The Mission & Objectives

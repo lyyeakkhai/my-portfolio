@@ -2,37 +2,45 @@
 
 A modern developer profile page built from scratch with **Vite**, **React 19**, and **Tailwind CSS v4** to practice core JSX rules, component hierarchy, and professional Git workflows.
 
-![Profile Page Preview](./screenshot.png)
+## 📱 Responsive Preview (Desktop & Mobile Side-by-Side)
+
+<table>
+  <tr>
+    <td width="65%" align="center"><strong>Desktop View (2-Column Layout)</strong></td>
+    <td width="35%" align="center"><strong>Mobile View (Single Column)</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshot-desktop.png" alt="Desktop View" /></td>
+    <td><img src="./screenshot-mobile.png" alt="Mobile View" /></td>
+  </tr>
+</table>
+
+### 🧩 shadcn/ui Project Cards (Rendered with Distinct Data)
+
+<img src="./screenshot-projects.png" alt="Featured Projects Composed from shadcn/ui" width="100%" />
 
 ---
 
 ## 🎯 The Mission & Objectives
 
-- **Scaffold a Vite + React Project:** Set up a clean, fast development environment.
-- **Component Architecture:** Build a modular profile view featuring:
-  - An `<h1>` with the developer's name (**Yeakkhai Ly**).
-  - A `<p>` with the goal for this course (**Master modern React and frontend development**).
-  - A `<StatusBadge />` component utilizing a JavaScript ternary operator to render dynamic statuses:
-    - `"Open to work"` (emerald green with pulse indicator).
-    - `"Busy learning"` (slate gray).
-- **Four Fundamental JSX Rules:**
-  1. **Single Parent Element:** All JSX is enclosed in a single root element (`<main className="...">`).
-  2. **`className` Attribute:** Using `className` consistently instead of HTML `class`.
-  3. **Explicitly Closed Tags:** All tags are closed, including self-closing components and elements (`<StatusBadge ... />`, `<div ... />`).
-  4. **Live Curly Brace Expressions:** Dynamic variables and expressions embedded in `{}` (e.g., `{profile.name}`, `{profile.goal}`, `{profile.year}`, and `{isOpenToWork ? "true" : "false"}`).
-- **Professional Git Workflow:**
-  - Feature work performed on branch `profile-v1`.
-  - Pushed `profile-v1` to GitHub.
-  - Merged `profile-v1` cleanly into `main`.
-  - Pushed `main` to GitHub.
+- **Restyle with Tailwind CSS v4 only:** Strict adherence to the 4px spacing scale (`p-6`, `gap-4`, `space-y-6`, `py-10`), `text-gray-900/700/500` typographic hierarchy, and one single accent color (`emerald-600`).
+- **Responsive Architecture:** Single column on mobile devices, 2-column layout (main 8-col + sidebar 4-col) from `md:` breakpoint up, with smooth hover and transition states.
+- **Component Extraction:**
+  - `SkillBadge.jsx`: Takes `{ name, category }` props, rendering different content per instance.
+  - `SectionCard.jsx`: Reusable container taking `{ title, badge, children }` rendering unquoted `{children}`.
+- **shadcn/ui Composition:**
+  - `ProjectCard.jsx`: Composed from `Card` + `Badge` + `Button` blueprints imported from `@/components/ui/*`.
+  - Rendered twice with distinct project datasets.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Framework:** React 19
-- **Build Tool:** Vite 8
+- **Build Tool:** Vite 8 (with `@` path alias support)
 - **Styling:** Tailwind CSS v4 (`@tailwindcss/vite`)
+- **UI Components:** shadcn/ui blueprints (`Card`, `Badge`, `Button`, `cva`, `clsx`, `tailwind-merge`)
+- **Icons:** Lucide React
 - **Linter:** Oxlint
 - **Version Control:** Git & GitHub
 
@@ -42,17 +50,29 @@ A modern developer profile page built from scratch with **Vite**, **React 19**, 
 
 ```text
 week-1/
-├── index.html               # Entry HTML shell
-├── package.json             # Project dependencies & scripts
-├── vite.config.js           # Vite configuration with Tailwind CSS v4 plugin
-├── README.md                # Project documentation
+├── index.html
+├── package.json
+├── vite.config.js               # Path alias '@' configured to ./src
+├── jsconfig.json
+├── README.md
+├── screenshot-desktop.png       # Desktop 2-column screenshot
+├── screenshot-mobile.png        # Mobile single-column screenshot
+├── screenshot-projects.png      # ProjectCards screenshot
 └── src/
-    ├── main.jsx             # React root mount (untouched as instructed)
-    ├── index.css            # Tailwind CSS v4 import (@import "tailwindcss";)
-    ├── App.jsx              # Main profile page container
-    ├── App.css              # Custom styles
+    ├── main.jsx
+    ├── index.css                # Tailwind CSS v4 import
+    ├── App.jsx                  # Responsive 2-column layout
+    ├── lib/
+    │   └── utils.js             # cn() utility
     └── components/
-        └── StatusBadge.jsx  # Reusable status badge with ternary logic
+        ├── ProjectCard.jsx      # Composed shadcn Card + Badge + Button
+        ├── SectionCard.jsx      # Reusable section with {children}
+        ├── SkillBadge.jsx       # Reusable props-driven badge
+        ├── StatusBadge.jsx      # Reusable status badge with ternary logic
+        └── ui/
+            ├── badge.jsx        # shadcn Badge blueprint
+            ├── button.jsx       # shadcn Button blueprint
+            └── card.jsx         # shadcn Card compound primitives
 ```
 
 ---

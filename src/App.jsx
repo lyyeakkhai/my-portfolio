@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import StatusBadge from "./components/StatusBadge"
 import SectionCard from "./components/SectionCard"
 import SkillBadge from "./components/SkillBadge"
@@ -25,8 +25,90 @@ function Github({ className, ...props }) {
   )
 }
 
+const GITHUB_REPOS = [
+  {
+    repo: "CADT-Events",
+    fallbackTitle: "CADT Events Platform",
+    fallbackDescription:
+      "Campus event platform for CADT — discover events, register in one click, manage attendance. Student + admin apps, Express API, Supabase, Clerk.",
+    status: "Shipped",
+    fallbackTags: ["React", "TypeScript", "Zod", "Clerk"],
+  },
+  {
+    repo: "AGI-trading",
+    fallbackTitle: "AGI Trading Intelligence",
+    fallbackDescription:
+      "Private AI trading intelligence and execution platform featuring automated analysis pipelines, strict type validation, and Dockerized microservices.",
+    status: "In Progress",
+    fallbackTags: ["Python", "TypeScript", "Docker", "AI/ML"],
+  },
+  {
+    repo: "GhostCLI",
+    fallbackTitle: "GhostCLI Proxy",
+    fallbackDescription:
+      "High-performance local AI model routing and proxy CLI in Go for multi-provider API translation and daemon orchestration.",
+    status: "Shipped",
+    fallbackTags: ["Go", "CLI", "AI Routing", "APIs"],
+  },
+]
+
 export default function App() {
   const [isOpenToWork, setIsOpenToWork] = useState(false)
+  const [projects, setProjects] = useState(() =>
+    GITHUB_REPOS.map((item) => ({
+      title: item.fallbackTitle,
+      status: item.status,
+      description: item.fallbackDescription,
+      tags: item.fallbackTags,
+      link: `https://github.com/lyyeakkhai/${item.repo}`,
+    }))
+  )
+
+  useEffect(() => {
+    let isMounted = true
+
+    async function fetchRepoData() {
+      try {
+        const updated = await Promise.all(
+          GITHUB_REPOS.map(async (item) => {
+            try {
+              const res = await fetch(`https://api.github.com/repos/lyyeakkhai/${item.repo}`)
+              if (!res.ok) return null
+              const data = await res.json()
+              return {
+                title: item.fallbackTitle,
+                status: item.status,
+                description: data.description || item.fallbackDescription,
+                tags: [
+                  data.language,
+                  ...(Array.isArray(data.topics) ? data.topics : []),
+                ].filter(Boolean).length > 0
+                  ? [data.language, ...(data.topics || [])].filter(Boolean)
+                  : item.fallbackTags,
+                link: data.html_url || `https://github.com/lyyeakkhai/${item.repo}`,
+              }
+            } catch {
+              return null
+            }
+          })
+        )
+
+        if (isMounted) {
+          setProjects((prev) =>
+            prev.map((p, idx) => (updated[idx] ? updated[idx] : p))
+          )
+        }
+      } catch {
+        // Keep pre-configured fallback data on network failure
+      }
+    }
+
+    fetchRepoData()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const profile = {
     name: "Yeakkhai Ly",
@@ -35,25 +117,6 @@ export default function App() {
     year: new Date().getFullYear(),
     quote: "“We are what we repeatedly do. Excellence, then, is not an act, but a habit.” — Aristotle",
   }
-
-  const projects = [
-    {
-      title: "CADT Events Platform",
-      status: "Shipped",
-      description:
-        "Full-stack campus event management platform featuring shared Zod validation schemas across client and admin frontends, Clerk authentication, and unified API clients.",
-      tags: ["React", "TypeScript", "Zod", "Clerk"],
-      link: "https://github.com/lyyeakkhai/CADT-Events",
-    },
-    {
-      title: "AGI Trading Intelligence",
-      status: "In Progress",
-      description:
-        "Private AI trading intelligence and execution platform featuring automated analysis pipelines, strict type validation, and Dockerized microservices.",
-      tags: ["Python", "TypeScript", "Docker", "AI/ML"],
-      link: "https://github.com/lyyeakkhai/AGI-trading",
-    },
-  ]
 
   const skills = [
     { name: "React 19", category: "Core Framework" },

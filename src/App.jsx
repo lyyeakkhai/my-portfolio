@@ -38,20 +38,20 @@ export default function App() {
 
   const projects = [
     {
-      title: "Lyceum Portfolio Profile",
+      title: "CADT Events Platform",
       status: "Shipped",
       description:
-        "A high-performance developer portfolio built with React 19, Vite, and Tailwind CSS. Features component-driven architecture, responsive design, and strict JSX audit verification.",
-      tags: ["React 19", "Tailwind CSS", "Vite", "shadcn/ui"],
-      link: "https://github.com/lyyeakkhai/my-portfolio",
+        "Full-stack campus event management platform featuring shared Zod validation schemas across client and admin frontends, Clerk authentication, and unified API clients.",
+      tags: ["React", "TypeScript", "Zod", "Clerk"],
+      link: "https://github.com/lyyeakkhai/CADT-Events",
     },
     {
-      title: "Autonomous Voice Reception Console",
+      title: "AGI Trading Intelligence",
       status: "In Progress",
       description:
-        "Real-time voice synthesis and triage workflow interface handling customer intake, trade-specific dispatch, and emergency rescue flows.",
-      tags: ["Web Audio", "FastAPI", "Tailwind CSS", "TypeScript"],
-      link: "https://github.com/lyyeakkhai/my-portfolio",
+        "Private AI trading intelligence and execution platform featuring automated analysis pipelines, strict type validation, and Dockerized microservices.",
+      tags: ["Python", "TypeScript", "Docker", "AI/ML"],
+      link: "https://github.com/lyyeakkhai/AGI-trading",
     },
   ]
 
